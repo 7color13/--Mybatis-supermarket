@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis,.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.IProductDAO">  <!--定位对应的命名空间-->
+    <insert  id="insertProduct">
+       insert into tproduct values(#{barCode},#{productName},#{price},#{supply})
+    </insert>
+    <select id="doSelect" resultType="vo.Product">  /*采取动态SQL语句*/
+        select * from tproduct where 1=1     /*通过改变默认构造函数来简化if*/
+        <if test="barCode!=null">
+            and barCode=#{barCode}
+        </if>
+        <if test="productName!=null">
+            and productName like CONCAT('%',#{productName},'%')
+        </if>
+        <if test="supply!=null">
+            and supply = #{supply}
+        </if>
+        <if test="price&gt;=0">
+            and price = #{price}
+        </if>
+    </select>
+    <update id="doUpdate">
+        update tproduct
+        <trim prefix="set" suffixOverrides=",">
+        <if test="barCode!=null">
+            barCode=#{barCode},
+        </if>
+        <if test="productName!=null">
+            productName like CONCAT('%',#{productName},'%'),
+        </if>
+        <if test="supply!=null">
+            supply = #{supply},
+        </if>
+        <if test="price&gt;=0">
+            price = #{price},
+        </if>
+        </trim>
+        where barCode=#{barCode},
+    </update>
+    <delete id="doDelete">
+        delete from tproduct where 1=1
+        <if test="barCode!=null">
+            and barCode=#{barCode}
+        </if>
+        <if test="productName!=null">
+            and productName=#{productName}
+        </if>
+        <if test="supply!=null">
+            and supply = #{supply}
+        </if>
+        <if test="price&gt;=0">
+            and price = #{price}
+        </if>
+    </delete>
+</mapper>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis,.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ISaleDetailDAO">
+    <insert  id="doInsert">
+       insert into tsaledetail values(#{flowNum},#{barCode},#{productName},#{price},#{count},#{operator},#{saletime})
+    </insert>
+    <select id="doSelect" resultType="vo.SaleDetail">
+        select * from tsaledetail where 1=1
+        <if test="saletime!=null">
+           and saletime like CONCAT('%',#{todayAnotherStr},'%')
+        </if>
+        <if test="barCode!=null">
+            and barCode=#{barCode}
+        </if>
+        <if test="flowNum!=null">
+            and flowNum=#{flowNum}
+        </if>
+        <if test="price&gt;=0">
+            and price=#{price}
+        </if>
+        <if test="count&gt;=0">
+            and count=#{count}
+        </if>
+        <if test="operator!=null">
+            and operator=#{operator}
+        </if>
+    </select>
+    <update id="doUpdate">
+        update tsaledetail
+        <trim prefix="set" suffixOverrides=",">
+            <if test="flowNum!=null">
+                flowNum=#{flowNum}
+            </if>
+            <if test="barCode!=null">
+                barCode=#{barCode}
+            </if>
+            <if test="productName!=null">
+                productName=#{productName}
+            </if>
+            <if test="price&gt;=0">
+                price=#{price}
+            </if>
+            <if test="count&gt;=0">
+                count=#{count}
+            </if>
+            <if test="saletime!=null">
+                saletime=#{saletime}
+            </if>
+            <if test="operator!=null">
+                operator=#{operator}
+            </if>
+        </trim>
+        where flowNum=#{flowNum}
+    </update>
+    <delete id="doDelete">
+        delete from tsaledetail where 1=1
+        <if test="flowNum!=null">
+            and flowNum=#{flowNum}
+        </if>
+        <if test="barCode!=null">
+            and barCode=#{barCode}
+        </if>
+        <if test="productName!=null">
+            and productName=#{productName}
+        </if>
+        <if test="price&gt;=0">
+            and price=#{price}
+        </if>
+        <if test="count&gt;=0">
+            and count=#{count}
+        </if>
+        <if test="saletime!=null">
+            and saletime=#{saletime}
+        </if>
+        <if test="operator!=null">
+            and operator=#{operator}
+        </if>
+    </delete>
+</mapper>

@@ -18,7 +18,7 @@ public class QueryView {
     public static boolean printDetail(String day, List<SaleDetail> saleDetailList, int countSum, double priceSum) {
         Scanner sc =new Scanner(System.in);
         System.out.println("日期所有的销售信息，输出显示格式如下：");
-        System.out.println(day + "销售如下\nYYYY年MM月DD日销售如下\n" +
+        System.out.println(day + "销售如下\n" +
                 "流水号\t商品名称\t单价\t数量\t金额\t时间\t收银员\n" +
                 "=====\t=======\t=\t====\t===\t\t====\t=====  ======\n");
         for (int i = 0; i < saleDetailList.size(); i++) {
